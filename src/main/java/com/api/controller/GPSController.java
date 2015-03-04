@@ -38,7 +38,7 @@ public class GPSController {
     }
 
     /**
-     * Retorna a atual posição de um determinado GPS
+     * Retorna a atual posicao de um determinado GPS
      * */
     @RequestMapping(value = "/position/{gpsId}", method = RequestMethod.GET)
     public @ResponseBody Position getPosition(@PathVariable String gpsId) {
@@ -51,7 +51,7 @@ public class GPSController {
     }
 
     /**
-     * Insere a posição de um GPS
+     * Insere a posicao de um GPS
      *
      * */
     @RequestMapping(value = "/position", method = RequestMethod.POST)

@@ -1,0 +1,40 @@
+url de get:
+
+http://apiv1-gpsapi.rhcloud.com/api/position/1010
+
+configurar APN
+
+    AT+SAPBR=3,1,"APN","gprs.oi.com.br"
+    OU
+    AT+SAPBR=3,1,"APN","tim.br"
+
+	AT+SAPBR=3,1,"USER","oi"
+	OU
+	AT+SAPBR=3,1,"USER","tim"
+
+    AT+SAPBR=3,1,"PWD","oi"
+    OU
+	AT+SAPBR=3,1,"PWD","tim"
+	    
+    AT+SAPBR=3,1,"Contype","GPRS"
+    
+    AT+SAPBR=1,1
+    
+    AT+HTTPINIT
+    
+    AT+HTTPPARA="CID",1
+
+
+fazer requisicao GET
+	AT+HTTPPARA="URL","apiv1-gpsapi.rhcloud.com/api/position/1010"
+	AT+HTTPPARA="URL","google.com"
+	AT+HTTPPARA="URL","uol.com"
+	
+	AT+HTTPACTION=0
+	AT+HTTPREAD=1,200
+
+
+finalizar conexao
+	AT+HTTPTERM
+
+

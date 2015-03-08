@@ -315,9 +315,9 @@ void setup()
 
 void loop()
 {
-    testHttpGet();
+    //testHttpGet();
     
-    readGpsInfo();
+    //readGpsInfo();
 
     readAndSendGpsData();
     /*
@@ -363,7 +363,7 @@ void readGpsInfo()
 }
 
 void testHttpGet(){
-  Serial.println("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/1010/23.3322410/46.5072746\"");
+  Serial.println("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/1010/23.3322410/46.5072746/\"");
   
   delay(3 * 1000);
   Serial.println("AT+HTTPACTION=0"); //now GET action

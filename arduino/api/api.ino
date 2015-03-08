@@ -363,7 +363,7 @@ void readGpsInfo()
 }
 
 void testHttpGet(){
-  Serial.println("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/1010\"");
+  Serial.println("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/1010/23.3322410/46.5072746\"");
   
   delay(3 * 1000);
   Serial.println("AT+HTTPACTION=0"); //now GET action
@@ -376,15 +376,16 @@ void testHttpGet(){
 void readAndSendGpsData(){
   Serial.print("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/");
 
-  Serial.print("1010");// gpsId
+  Serial.print("1011");// gpsId
   Serial.print("/");
 
   latitude();// manda latitude para porta serial
   Serial.print("/");
 
   longitude();
-  Serial.println("\"");
+  Serial.print("/");
 
+  Serial.println("\"");// ->"<- para "enviar" o comando  
   delay(3 * 1000);
 
   Serial.println("AT+HTTPACTION=0"); //now GET action

@@ -79,7 +79,7 @@ public class GPSController {
         Position position = new Position();
         position.setGpsId(Integer.parseInt(gpsId));
         position.setPosX(Double.parseDouble(posX));
-        position.setPosX(Double.parseDouble(posY));
+        position.setPosY(Double.parseDouble(posY));
         //position.setDate(Calendar.getInstance());
 
         positionDAO.insert(position);

@@ -294,6 +294,7 @@ void setup()
   digitalWrite(5,HIGH);//Output GSM Timing 
   delay(1500);
   digitalWrite(5,LOW);  
+  
   digitalWrite(3,LOW);//Enable the GSM mode
   digitalWrite(4,HIGH);//Disable the GPS mode
   delay(2000);
@@ -303,6 +304,7 @@ void setup()
   delay(5000);
   
   start_GSM();
+  start_GPS();
 }
 
  
@@ -310,7 +312,7 @@ void setup()
 void loop()
 {
     testHttpGet();
-    //readGpsInfo();
+    readGpsInfo();
 
     /*
     Serial.print("UTC:");
@@ -388,7 +390,16 @@ void start_GSM(){
     Serial.println("AT+HTTPPARA=\"CID\",1");
     delay(2000);
  }
-
+void start_GPS(){
+    Serial.println("AT");   
+    delay(2000);
+    //turn on GPS power supply
+    Serial.println("AT+CGPSPWR=1");
+    delay(1000);
+    //reset GPS in autonomy mode
+    Serial.println("AT+CGPSRST=1");
+    delay(1000); 
+}
 
 void makeUrl(double lat, double lon){
   

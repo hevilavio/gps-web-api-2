@@ -168,6 +168,8 @@ double latitude()//get latitude
       {
         i=0;
         //Serial.println(Datatransfer(lat,5)/100.0,7);//print latitude 
+        Serial.print(Datatransfer(lat,5)/100.0,7);
+        
         latitude = Datatransfer(lat,5)/100.0,7;
         return latitude;
       }  
@@ -220,6 +222,8 @@ double longitude()//get longitude
       {
         i=0;
         //Serial.println(Datatransfer(lon,5)/100.0,7);
+        Serial.print(Datatransfer(lon,5)/100.0,7);
+        
         longitude = Datatransfer(lon,5)/100.0,7;
         return longitude;
       }  
@@ -312,8 +316,10 @@ void setup()
 void loop()
 {
     testHttpGet();
+    
     readGpsInfo();
 
+    readAndSendGpsData();
     /*
     Serial.print("UTC:");
     UTC();
@@ -364,8 +370,27 @@ void testHttpGet(){
   delay(7 * 1000);
 
   Serial.println("AT+HTTPREAD=1,200"); //now GET action
-  
 }
+
+// Usado temporariamente, o correto seria enviar dados via POST
+void readAndSendGpsData(){
+  Serial.print("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/");
+
+  Serial.print("1010");// gpsId
+  Serial.print("/");
+
+  latitude();// manda latitude para porta serial
+  Serial.print("/");
+
+  longitude();
+  Serial.println("\"");
+
+  delay(3 * 1000);
+
+  Serial.println("AT+HTTPACTION=0"); //now GET action
+  delay(7 * 1000);
+}
+
 void showResponseCommand(){
    if(Serial.available())
    {

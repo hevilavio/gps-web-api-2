@@ -75,7 +75,7 @@ public class GPSController {
     @RequestMapping(value = "/position/save/{gpsId}/{posX}/{posY}", method = RequestMethod.GET)
     public @ResponseBody Integer savePositionWithGet(@PathVariable String gpsId, @PathVariable String posX, @PathVariable String posY) {
 
-        logger.info("M=savePositionWithGet, gpsId=" + gpsId, ", posX=" + posX, ", posY=" + posY);
+        logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", posX=" + posX + ", posY=" + posY);
         Position position = new Position();
         position.setGpsId(Integer.parseInt(gpsId));
         position.setPosX(Double.parseDouble(posX));

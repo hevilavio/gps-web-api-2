@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Calendar;
+
 @Controller
 @RequestMapping("/api")
 public class GPSController {
@@ -61,6 +63,26 @@ public class GPSController {
 
         positionDAO.insert(position);
 
+        return position.getId();
+    }
+
+    /**
+     * Insere a posicao de um GPS
+     *
+     * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
+     *
+     * */
+    @RequestMapping(value = "/position/save/{gpsId}/{posX}/{posY}", method = RequestMethod.GET)
+    public @ResponseBody Integer savePositionWithGet(@PathVariable String gpsId, @PathVariable String posX, @PathVariable String posY) {
+
+        logger.info("M=savePositionWithGet, gpsId=" + gpsId, ", posX=" + posX, ", posY=" + posY);
+        Position position = new Position();
+        position.setGpsId(Integer.parseInt(gpsId));
+        position.setPosX(Double.parseDouble(posX));
+        position.setPosX(Double.parseDouble(posY));
+        //position.setDate(Calendar.getInstance());
+
+        positionDAO.insert(position);
         return position.getId();
     }
 

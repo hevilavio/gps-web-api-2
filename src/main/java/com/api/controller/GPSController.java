@@ -76,6 +76,11 @@ public class GPSController {
     public @ResponseBody Integer savePositionWithGet(@PathVariable String gpsId, @PathVariable String posX, @PathVariable String posY) {
 
         logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", posX=" + posX + ", posY=" + posY);
+
+        if(isInvalidData(posX, posY)){
+            return 0;
+        }
+
         Position position = new Position();
         position.setGpsId(Integer.parseInt(gpsId));
         position.setPosX(Double.parseDouble(posX));
@@ -86,4 +91,11 @@ public class GPSController {
         return position.getId();
     }
 
+    public boolean isInvalidData(String posX, String posY) {
+        if("inf".equalsIgnoreCase(posX) || "inf".equalsIgnoreCase(posY)){
+            return true;
+        }
+
+        return false;
+    }
 }

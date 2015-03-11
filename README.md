@@ -1,3 +1,7 @@
-The OpenShift `jbossas` cartridge documentation can be found at:
+# gps-web-api
 
-http://openshift.github.io/documentation/oo_cartridge_guide.html#jbossas
+A project to track an arduino with a SIM908 shield attached.
+
+You can see it at: http://apiv1-gpsapi.rhcloud.com/showLocation
+
+Not finished yet!

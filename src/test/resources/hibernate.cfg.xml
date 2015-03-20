@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost/persistence</property>
+        <property name="connection.url">jdbc:mysql://localhost/gpsapi</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
 
@@ -34,6 +34,8 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <property name="connection.autocommit">false</property>
+
+        <property name="javax.persistence.validation.mode">none</property>
 
         <mapping class="com.api.model.Position"/>
 

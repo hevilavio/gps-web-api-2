@@ -17,7 +17,7 @@ public interface Calculator {
      * Dada uma area e uma posição, retorna uma lista de pares
      * A,B, que são segmentos de reta que cortam o eixo X de position.
      */
-    List<Pair<Position, Position>> findCandidatesToInterssect(Position position, Area area);
+    List<Pair<AreaPosition, AreaPosition>> findCandidatesToInterssect(Position position, Area area);
 
     /**
      * Dada uma lista de candidatos, conta quandos deles realmente

@@ -8,31 +8,22 @@ import java.util.List;
  */
 public class Area {
 
-    private List<Position> positionList;
+    private List<AreaPosition> areaPositions;
 
     public Area() {
-        positionList = new ArrayList<>();
+        areaPositions = new ArrayList<>();
     }
 
     // Todas as positions devem estar ordenadas
-    public Area(Position... positions) {
-        positionList = new ArrayList<>();
+    public Area(AreaPosition... positions) {
+        areaPositions = new ArrayList<>();
 
-        for (Position position : positions) {
-            positionList.add(position);
+        for (AreaPosition position : positions) {
+            areaPositions.add(position);
         }
     }
 
-    public boolean add(Position position) {
-
-        if (position == null) {
-            throw new IllegalArgumentException();
-        }
-
-        return positionList.add(position);
-    }
-
-    public List<Position> getPositionList() {
-        return positionList;
+    public List<AreaPosition> getAreaPositions() {
+        return areaPositions;
     }
 }

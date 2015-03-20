@@ -60,7 +60,7 @@ public class CalculatorImplTest {
         p.setLatitude(20);
         p.setLongitude(50);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(0, candidatesToInterssect.size());
@@ -75,7 +75,7 @@ public class CalculatorImplTest {
         p.setLatitude(20);
         p.setLongitude(0);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(0, candidatesToInterssect.size());
@@ -91,7 +91,7 @@ public class CalculatorImplTest {
         p.setLatitude(11);
         p.setLongitude(21);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(2, candidatesToInterssect.size());
@@ -108,7 +108,7 @@ public class CalculatorImplTest {
         p.setLatitude(10);
         p.setLongitude(50);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(0, candidatesToInterssect.size());
@@ -125,7 +125,7 @@ public class CalculatorImplTest {
         p.setLatitude(45);
         p.setLongitude(25);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(2, candidatesToInterssect.size());
@@ -141,7 +141,7 @@ public class CalculatorImplTest {
         p.setLatitude(70);
         p.setLongitude(20);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(0, candidatesToInterssect.size());
@@ -155,7 +155,7 @@ public class CalculatorImplTest {
         p.setLatitude(11);
         p.setLongitude(11);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(2, candidatesToInterssect.size());
@@ -169,7 +169,7 @@ public class CalculatorImplTest {
         p.setLatitude(11);
         p.setLongitude(35);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(4, candidatesToInterssect.size());
@@ -183,7 +183,7 @@ public class CalculatorImplTest {
         p.setLatitude(70);
         p.setLongitude(21);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(4, candidatesToInterssect.size());
@@ -197,7 +197,7 @@ public class CalculatorImplTest {
         p.setLatitude(10);
         p.setLongitude(9.99);
 
-        final List<Pair<Position, Position>> candidatesToInterssect = calculator
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
 
         assertEquals(0, candidatesToInterssect.size());

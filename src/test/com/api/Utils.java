@@ -1,7 +1,7 @@
 package com.api;
 
 import com.api.model.Area;
-import com.api.model.Position;
+import com.api.model.AreaPosition;
 
 /**
  * Created by hevilavio on 3/17/15.
@@ -9,39 +9,20 @@ import com.api.model.Position;
 public class Utils {
 
     public static Area getRetangle() {
-        Position p1 = new Position();
-        p1.setLatitude(10);
-        p1.setLongitude(20);
 
-        Position p2 = new Position();
-        p2.setLatitude(10);
-        p2.setLongitude(40);
-
-        Position p3 = new Position();
-        p3.setLatitude(20);
-        p3.setLongitude(40);
-
-        Position p4 = new Position();
-        p4.setLatitude(20);
-        p4.setLongitude(20);
-
-        return new Area(p1, p2, p3, p4, p1);
+        return new Area(create(10, 20),
+                create(10, 40),
+                create(20, 40),
+                create(20, 20),
+                create(10, 20));
     }
 
     public static Area getTriangle() {
-        Position p1 = new Position();
-        p1.setLatitude(40);
-        p1.setLongitude(40);
 
-        Position p2 = new Position();
-        p2.setLatitude(60);
-        p2.setLongitude(20);
-
-        Position p3 = new Position();
-        p3.setLatitude(20);
-        p3.setLongitude(20);
-
-        return new Area(p1, p2, p3, p1);
+        return new Area(create(40, 40),
+                create(60, 20),
+                create(20, 20),
+                create(40, 40));
     }
 
     /**
@@ -65,10 +46,10 @@ public class Utils {
                 create(10, 10));
     }
 
-    private static Position create(double x, double y) {
-        Position p = new Position();
-        p.setLatitude(x);
-        p.setLongitude(y);
-        return p;
+    private static AreaPosition create(double x, double y) {
+        AreaPosition areaPosition = new AreaPosition();
+        areaPosition.setLatitude(x);
+        areaPosition.setLongitude(y);
+        return areaPosition;
     }
 }

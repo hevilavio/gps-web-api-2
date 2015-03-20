@@ -18,14 +18,16 @@ public class CalculatorImpl implements Calculator {
     @Override
     public boolean isInsideArea(Position position, Area area) {
 
-        final List<Pair<Position, Position>> candidatesToInterssect = findCandidatesToInterssect(position, area);
+        // Lista de segmentos de possivel interseccao
+        final List<Pair<AreaPosition, AreaPosition>> candidatesToInterssect = findCandidatesToInterssect(position,
+                area);
         logger.info("M=isInsideArea, size=" + candidatesToInterssect.size());
 
         // TODO Melhorar este algoritmo
         int realInsersections = 0;
-        for (Pair<Position, Position> candidate : candidatesToInterssect) {
-            Position a = candidate.getA();
-            Position b = candidate.getB();
+        for (Pair<AreaPosition, AreaPosition> candidate : candidatesToInterssect) {
+            AreaPosition a = candidate.getA();
+            AreaPosition b = candidate.getB();
 
             logger.info("M=isInsideArea, a.getLatitude=" + a.getLatitude() + ", latitude=" + position.getLatitude()
                     + ", b.getLatitude=" + b.getLatitude());
@@ -40,22 +42,22 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public List<Pair<Position, Position>> findCandidatesToInterssect(Position position, Area area) {
+    public List<Pair<AreaPosition, AreaPosition>> findCandidatesToInterssect(Position position, Area area) {
 
-        final List<Position> positionList = area.getPositionList();
+        final List<AreaPosition> areaPositions = area.getAreaPositions();
 
         double longitude = position.getLongitude();
 
-        List<Pair<Position, Position>> pairs = new ArrayList<>();
-        final Iterator<Position> iterator = positionList.iterator();
+        List<Pair<AreaPosition, AreaPosition>> pairs = new ArrayList<>();
+        final Iterator<AreaPosition> iterator = areaPositions.iterator();
 
-        Position prev = null;
+        AreaPosition prev = null;
         while (iterator.hasNext()) {
             if (prev == null) {
                 prev = iterator.next();
                 continue;
             }
-            Position current = iterator.next();
+            AreaPosition current = iterator.next();
 
             // Verifica se os pontos estão em lados distintos da reta R
             if (prev.getLongitude() < longitude && longitude < current.getLongitude() || // "subindo"
@@ -65,7 +67,7 @@ public class CalculatorImpl implements Calculator {
                         + ", longitude=" + longitude //
                         + ", current.getLongitude=" + current.getLongitude());
 
-                pairs.add(new Pair<Position, Position>(prev, current));
+                pairs.add(new Pair<>(prev, current));
 
                 if (iterator.hasNext()) {
                     prev = iterator.next();

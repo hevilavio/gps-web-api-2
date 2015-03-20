@@ -31,13 +31,15 @@
         <property name="format_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">validate</property>
+        <property name="hbm2ddl.auto">create</property>
 
         <property name="connection.autocommit">false</property>
 
         <property name="javax.persistence.validation.mode">none</property>
 
         <mapping class="com.api.model.Position"/>
+        <mapping class="com.api.model.Area"/>
+        <mapping class="com.api.model.AreaPosition"/>
 
     </session-factory>
 

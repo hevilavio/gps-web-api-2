@@ -1,10 +1,19 @@
 package com.api.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by hevilavio on 3/20/15.
  */
+@Entity
+@Table(name = "gps_area_position")
 public class AreaPosition {
 
+    @Id
+    @GeneratedValue
     private int id;
 
     private int idArea;

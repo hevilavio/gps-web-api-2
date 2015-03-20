@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Calendar;
-
 @Controller
 @RequestMapping("/api")
 public class GPSController {
@@ -22,14 +20,15 @@ public class GPSController {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GPSController.class);
     private PositionDAO positionDAO;
 
-
-    GPSController(){
+    GPSController() {
         logger.info("M=GPSController, Iniciando...");
         positionDAO = new PositionDAOImpl();
     }
 
     @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    public @ResponseBody Shop getShopInJSON(@PathVariable String name) {
+    public
+    @ResponseBody
+    Shop getShopInJSON(@PathVariable String name) {
 
         Shop shop = new Shop();
         shop.setName(name);
@@ -41,9 +40,11 @@ public class GPSController {
 
     /**
      * Retorna a atual posicao de um determinado GPS
-     * */
+     */
     @RequestMapping(value = "/position/{gpsId}", method = RequestMethod.GET)
-    public @ResponseBody Position getPosition(@PathVariable String gpsId) {
+    public
+    @ResponseBody
+    Position getPosition(@PathVariable String gpsId) {
 
         logger.info("M=getCurrent, gpsId=" + gpsId);
 
@@ -54,10 +55,11 @@ public class GPSController {
 
     /**
      * Insere a posicao de um GPS
-     *
-     * */
+     */
     @RequestMapping(value = "/position", method = RequestMethod.POST)
-    public @ResponseBody Integer savePosition(ModelMap model, @RequestBody Position position) {
+    public
+    @ResponseBody
+    Integer savePosition(ModelMap model, @RequestBody Position position) {
 
         logger.info("M=savePosition, position=" + position.toString());
 
@@ -68,31 +70,31 @@ public class GPSController {
 
     /**
      * Insere a posicao de um GPS
-     *
+     * <p/>
      * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
-     *
-     * */
-    @RequestMapping(value = "/position/save/{gpsId}/{posX}/{posY}", method = RequestMethod.GET)
-    public @ResponseBody Integer savePositionWithGet(@PathVariable String gpsId, @PathVariable String posX, @PathVariable String posY) {
+     */
+    @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
+    public @ResponseBody Integer savePositionWithGet( //
+            @PathVariable String gpsId, @PathVariable String latitude, @PathVariable String longitude) {
 
-        logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", posX=" + posX + ", posY=" + posY);
+        logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", latitude=" + latitude + ", longitude=" + longitude);
 
-        if(isInvalidData(posX, posY)){
+        if (isInvalidData(latitude, longitude)) {
             return 0;
         }
 
         Position position = new Position();
         position.setGpsId(Integer.parseInt(gpsId));
-        position.setPosX(Double.parseDouble(posX));
-        position.setPosY(Double.parseDouble(posY));
+        position.setLatitude(Double.parseDouble(latitude));
+        position.setLongitude(Double.parseDouble(longitude));
         //position.setDate(Calendar.getInstance());
 
         positionDAO.insert(position);
         return position.getId();
     }
 
-    public boolean isInvalidData(String posX, String posY) {
-        if("inf".equalsIgnoreCase(posX) || "inf".equalsIgnoreCase(posY)){
+    public boolean isInvalidData(String latitude, String longitude) {
+        if ("inf".equalsIgnoreCase(latitude) || "inf".equalsIgnoreCase(longitude)) {
             return true;
         }
 

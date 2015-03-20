@@ -27,8 +27,8 @@ public class PositionDAOImplTest {
     public void canInsert() {
 
         Position position = new Position();
-        position.setPosX(10);
-        position.setPosY(20);
+        position.setLatitude(10);
+        position.setLongitude(20);
         position.setGpsId(1010);
         position.setDate(Calendar.getInstance());
 
@@ -72,8 +72,8 @@ public class PositionDAOImplTest {
 
     private Position insertPosition(Integer gpsId, Calendar calendar) {
         Position position = new Position();
-        position.setPosX(10);
-        position.setPosY(20);
+        position.setLatitude(10);
+        position.setLongitude(20);
         position.setGpsId(gpsId);
         position.setDate(calendar);
 

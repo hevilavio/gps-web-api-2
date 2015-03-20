@@ -19,7 +19,7 @@ public class CalculatorImpl implements Calculator {
     public boolean isInsideArea(Position position, Area area) {
 
         final List<Pair<Position, Position>> candidatesToInterssect = findCandidatesToInterssect(position, area);
-        logger.info("M=IIA, size=" + candidatesToInterssect.size());
+        logger.info("M=isInsideArea, size=" + candidatesToInterssect.size());
 
         // TODO Melhorar este algoritmo
         int realInsersections = 0;
@@ -27,8 +27,10 @@ public class CalculatorImpl implements Calculator {
             Position a = candidate.getA();
             Position b = candidate.getB();
 
-            logger.info("M=IIA, a.X=" + a.getPosX() + ", X=" + position.getPosX() + ", b.X=" + b.getPosX());
-            if (position.getPosX() < a.getPosX() || position.getPosX() < b.getPosX()) {
+            logger.info("M=isInsideArea, a.getLatitude=" + a.getLatitude() + ", latitude=" + position.getLatitude()
+                    + ", b.getLatitude=" + b.getLatitude());
+
+            if (position.getLatitude() < a.getLatitude() || position.getLatitude() < b.getLatitude()) {
                 realInsersections++;
             }
         }
@@ -42,7 +44,7 @@ public class CalculatorImpl implements Calculator {
 
         final List<Position> positionList = area.getPositionList();
 
-        double posY = position.getPosY();
+        double longitude = position.getLongitude();
 
         List<Pair<Position, Position>> pairs = new ArrayList<>();
         final Iterator<Position> iterator = positionList.iterator();
@@ -56,12 +58,12 @@ public class CalculatorImpl implements Calculator {
             Position current = iterator.next();
 
             // Verifica se os pontos estão em lados distintos da reta R
-            if (prev.getPosY() < posY && posY < current.getPosY() || // "subindo"
-                    prev.getPosY() > posY && posY > current.getPosY()) { // "descendo"
+            if (prev.getLongitude() < longitude && longitude < current.getLongitude() || // "subindo"
+                    prev.getLongitude() > longitude && longitude > current.getLongitude()) { // "descendo"
 
-                logger.info("M=FCTI, prev.Y=" + prev.getPosY() //
-                        + ", posY=" + posY //
-                        + ", current.Y=" + current.getPosY());
+                logger.info("M=findCandidatesToInterssect, prev.getLongitude=" + prev.getLongitude() //
+                        + ", longitude=" + longitude //
+                        + ", current.getLongitude=" + current.getLongitude());
 
                 pairs.add(new Pair<Position, Position>(prev, current));
 

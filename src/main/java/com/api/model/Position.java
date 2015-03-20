@@ -1,11 +1,9 @@
 package com.api.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -21,9 +19,9 @@ public class Position {
 
     private int gpsId;
 
-    private double posX;
+    private double latitude;
 
-    private double posY;
+    private double longitude;
 
     private Calendar date;
 
@@ -35,12 +33,12 @@ public class Position {
         return gpsId;
     }
 
-    public double getPosX() {
-        return posX;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public double getPosY() {
-        return posY;
+    public double getLongitude() {
+        return longitude;
     }
 
     public Calendar getDate() {
@@ -51,12 +49,12 @@ public class Position {
         this.gpsId = gpsId;
     }
 
-    public void setPosX(double posX) {
-        this.posX = posX;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 
-    public void setPosY(double posY) {
-        this.posY = posY;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public void setDate(Calendar date) {
@@ -67,7 +65,7 @@ public class Position {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("[posX=").append(posX).append(", posY=").append(posY).append("]");
+        sb.append("[latitude=").append(latitude).append(", longitude=").append(longitude).append("]");
 
         return sb.toString();
 

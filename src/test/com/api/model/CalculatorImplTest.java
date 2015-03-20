@@ -24,12 +24,12 @@ public class CalculatorImplTest {
         area = Utils.getRetangle();
 
         Position p1 = new Position();
-        p1.setPosX(10);
-        p1.setPosY(21);
+        p1.setLatitude(10);
+        p1.setLongitude(21);
 
         Position p2 = new Position();
-        p2.setPosX(10);
-        p2.setPosY(39);
+        p2.setLatitude(10);
+        p2.setLongitude(39);
 
         assertTrue(calculator.isInsideArea(p1, area));
         assertTrue(calculator.isInsideArea(p2, area));
@@ -40,12 +40,12 @@ public class CalculatorImplTest {
         area = Utils.getRetangle();
 
         Position p1 = new Position();
-        p1.setPosX(10);
-        p1.setPosY(19);
+        p1.setLatitude(10);
+        p1.setLongitude(19);
 
         Position p2 = new Position();
-        p2.setPosX(5);
-        p2.setPosY(25);
+        p2.setLatitude(5);
+        p2.setLongitude(25);
 
         assertFalse("Falhou para p1=" + p1.toString(), calculator.isInsideArea(p1, area));
         assertFalse("Falhou para p2=" + p2.toString(), calculator.isInsideArea(p2, area));
@@ -57,8 +57,8 @@ public class CalculatorImplTest {
         area = Utils.getRetangle();
 
         Position p = new Position();
-        p.setPosX(20);
-        p.setPosY(50);
+        p.setLatitude(20);
+        p.setLongitude(50);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -72,8 +72,8 @@ public class CalculatorImplTest {
         area = Utils.getRetangle();
 
         Position p = new Position();
-        p.setPosX(20);
-        p.setPosY(0);
+        p.setLatitude(20);
+        p.setLongitude(0);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -88,8 +88,8 @@ public class CalculatorImplTest {
 
         // está dentro do retangulo
         Position p = new Position();
-        p.setPosX(11);
-        p.setPosY(21);
+        p.setLatitude(11);
+        p.setLongitude(21);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -105,8 +105,8 @@ public class CalculatorImplTest {
 
         // está dentro do retangulo
         Position p = new Position();
-        p.setPosX(10);
-        p.setPosY(50);
+        p.setLatitude(10);
+        p.setLongitude(50);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -122,8 +122,8 @@ public class CalculatorImplTest {
 
         // está dentro do triangulo
         Position p = new Position();
-        p.setPosX(45);
-        p.setPosY(25);
+        p.setLatitude(45);
+        p.setLongitude(25);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -138,8 +138,8 @@ public class CalculatorImplTest {
 
         // está fora do triangulo
         Position p = new Position();
-        p.setPosX(70);
-        p.setPosY(20);
+        p.setLatitude(70);
+        p.setLongitude(20);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -152,8 +152,8 @@ public class CalculatorImplTest {
         area = Utils.getDisform();
 
         Position p = new Position();
-        p.setPosX(11);
-        p.setPosY(11);
+        p.setLatitude(11);
+        p.setLongitude(11);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -166,8 +166,8 @@ public class CalculatorImplTest {
         area = Utils.getDisform();
 
         Position p = new Position();
-        p.setPosX(11);
-        p.setPosY(35);
+        p.setLatitude(11);
+        p.setLongitude(35);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -180,8 +180,8 @@ public class CalculatorImplTest {
         area = Utils.getDisform();
 
         Position p = new Position();
-        p.setPosX(70);
-        p.setPosY(21);
+        p.setLatitude(70);
+        p.setLongitude(21);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);
@@ -194,8 +194,8 @@ public class CalculatorImplTest {
         area = Utils.getDisform();
 
         Position p = new Position();
-        p.setPosX(10);
-        p.setPosY(9.99);
+        p.setLatitude(10);
+        p.setLongitude(9.99);
 
         final List<Pair<Position, Position>> candidatesToInterssect = calculator
                 .findCandidatesToInterssect(p, area);

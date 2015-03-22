@@ -30,7 +30,7 @@ public class BaseController {
     @RequestMapping(value = "/showLocation", method = RequestMethod.GET)
     public String showLocation(ModelMap model) {
 
-        logger.debug("M=showLocation");
+        logger.info("M=showLocation");
         return VIEW_SHOW_LOCATION;
 
     }
@@ -38,7 +38,7 @@ public class BaseController {
     @RequestMapping(value = "/createArea", method = RequestMethod.GET)
     public String createArea(ModelMap model) {
 
-        logger.debug("M=createArea");
+        logger.info("M=createArea");
         return VIEW_CREATE_AREA;
 
     }

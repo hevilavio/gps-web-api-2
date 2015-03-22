@@ -13,6 +13,8 @@
 
         <mvc:annotation-driven />
 
+        <mvc:resources mapping="/js/**" location="/WEB-INF/pages/js/" />
+
         <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
                 <property name="prefix">
                         <value>/WEB-INF/pages/</value>

@@ -8,20 +8,20 @@ import java.util.List;
 public interface Calculator {
 
     /**
-     * Dada uma area e uma posição, retorna true se e somente se
-     * a posição está dentro da área.
+     * Dada uma area e uma posicao, retorna true se e somente se
+     * a posicao esta dentro da area.
      */
     boolean isInsideArea(Position position, Area area);
 
     /**
-     * Dada uma area e uma posição, retorna uma lista de pares
-     * A,B, que são segmentos de reta que cortam o eixo X de position.
+     * Dada uma area e uma posicao, retorna uma lista de pares
+     * A,B, que sao segmentos de reta que cortam o eixo X de position.
      */
     List<Pair<AreaPosition, AreaPosition>> findCandidatesToInterssect(Position position, Area area);
 
     /**
      * Dada uma lista de candidatos, conta quandos deles realmente
-     * estão à direita do ponto.
+     * estao a direita do ponto.
      */
     int countRealInterssect(Position position, Area area);
 

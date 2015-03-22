@@ -36,8 +36,8 @@ public class CalculatorImpl implements Calculator {
                 realInsersections++;
             }
         }
-        // Quando o numero de intersecções é impar, significa que o ponto
-        // está dentro da área (salvo casos especiais).
+        // Quando o numero de interseccoes eh impar, significa que o ponto
+        // esta dentro da area (salvo casos especiais).
         return realInsersections > 0 && realInsersections % 2 != 0;
     }
 
@@ -59,7 +59,7 @@ public class CalculatorImpl implements Calculator {
             }
             AreaPosition current = iterator.next();
 
-            // Verifica se os pontos estão em lados distintos da reta R
+            // Verifica se os pontos estao em lados distintos da reta R
             if (prev.getLongitude() < longitude && longitude < current.getLongitude() || // "subindo"
                     prev.getLongitude() > longitude && longitude > current.getLongitude()) { // "descendo"
 

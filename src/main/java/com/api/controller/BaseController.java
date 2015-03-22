@@ -12,6 +12,7 @@ public class BaseController {
     private static int counter = 0;
     private static final String VIEW_INDEX = "index";
     private static final String VIEW_SHOW_LOCATION = "showLocation";
+    private static final String VIEW_CREATE_AREA = "createArea";
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(BaseController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -31,6 +32,14 @@ public class BaseController {
 
         logger.debug("M=showLocation");
         return VIEW_SHOW_LOCATION;
+
+    }
+
+    @RequestMapping(value = "/createArea", method = RequestMethod.GET)
+    public String createArea(ModelMap model) {
+
+        logger.debug("M=createArea");
+        return VIEW_CREATE_AREA;
 
     }
 

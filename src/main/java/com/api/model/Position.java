@@ -10,7 +10,7 @@ import java.util.Calendar;
  * Created by hevilavio on 1/17/15.
  */
 @Entity
-@Table(name = "gps_position")
+@Table(name = "gps_device_position")
 public class Position {
 
     @Id

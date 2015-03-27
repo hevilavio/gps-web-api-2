@@ -1,8 +1,11 @@
 package com.api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -14,9 +17,12 @@ public class AreaPosition {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_area_position")
     private int id;
 
-    private int idArea;
+    @ManyToOne
+    @JoinColumn(name = "id_area", nullable = false)
+    private Area area;
 
     private double latitude;
 
@@ -26,8 +32,8 @@ public class AreaPosition {
         return id;
     }
 
-    public int getIdArea() {
-        return idArea;
+    public Area getArea() {
+        return area;
     }
 
     public double getLatitude() {
@@ -38,8 +44,8 @@ public class AreaPosition {
         return longitude;
     }
 
-    public void setIdArea(int idArea) {
-        this.idArea = idArea;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public void setLatitude(double latitude) {

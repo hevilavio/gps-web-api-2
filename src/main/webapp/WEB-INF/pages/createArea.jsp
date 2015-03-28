@@ -98,7 +98,8 @@
                 createPolygonUsingMarkers();
 
                 // TODO - fixme. O ideal é que isso viesse no objeto
-                var center = area.positions[area.positions / 2];
+                var middle = Math.round(area.positions.length/2);
+                var center = area.positions[middle];
                 map.setCenter(new google.maps.LatLng(center.latitude, center.longitude));
 
             }).fail(function(data){

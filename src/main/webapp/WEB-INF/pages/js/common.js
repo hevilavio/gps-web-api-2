@@ -52,6 +52,8 @@ function getCurrentPosition(){
     $.get(url, function(data){
         posX = data.lat;
         posY = data.lon;
+    }).fail(function(data){
+        logger("Erro ao buscar Area atual. error=" + data.statusText);
     });
 
     return new google.maps.LatLng(posX, posY);

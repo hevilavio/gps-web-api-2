@@ -76,7 +76,7 @@ public class Area {
             return;
         }
 
-        // Relacionamento @OneToMany entre Area -> AreaPosition
+        // Relacionamento @ManyToOne entre AreaPosition -> Area
         for (AreaPosition position : positions) {
             position.setArea(this);
         }

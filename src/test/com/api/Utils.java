@@ -3,6 +3,10 @@ package com.api;
 import com.api.model.Area;
 import com.api.model.AreaPosition;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * Created by hevilavio on 3/17/15.
  */
@@ -51,5 +55,26 @@ public class Utils {
         areaPosition.setLatitude(x);
         areaPosition.setLongitude(y);
         return areaPosition;
+    }
+
+    public static Area getArea() {
+        Area area = new Area();
+
+        area.setCreatedAt(Calendar.getInstance());
+        area.setActive(true);
+
+        List<AreaPosition> areaPositions = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            AreaPosition areaPosition = new AreaPosition();
+
+            areaPosition.setLatitude(10.00);
+            areaPosition.setLongitude(10.00);
+
+            areaPositions.add(areaPosition);
+        }
+
+        area.setPositions(areaPositions);
+
+        return area;
     }
 }

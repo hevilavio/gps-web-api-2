@@ -1,13 +1,12 @@
 package com.api.dao;
 
+import com.api.Utils;
+import com.api.UtilsValidator;
 import com.api.model.Area;
-import com.api.model.AreaPosition;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import static org.junit.Assert.*;
 
 public class AreaDAOImplTest {
 
@@ -19,25 +18,49 @@ public class AreaDAOImplTest {
     }
 
     @Test
-    public void testSave() {
-        Area area = new Area();
+    public void testCreateNew() {
+        Area area = Utils.getArea();
 
-        area.setCreatedAt(Calendar.getInstance());
-        area.setActive(true);
+        areaDAO.createNew(area);
 
-        List<AreaPosition> areaPositions = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            AreaPosition areaPosition = new AreaPosition();
+        UtilsValidator.validateArea(area);
+    }
 
-            areaPosition.setArea(area);
-            areaPosition.setLatitude(10.00);
-            areaPosition.setLongitude(10.00);
 
-            areaPositions.add(areaPosition);
-        }
+    @Test
+    public void testGet(){
+        Area area = Utils.getArea();
+        Area area2 = Utils.getArea();
 
-        area.setPositions(areaPositions);
+        areaDAO.createNew(area);
 
-        areaDAO.save(area);
+        int id = area.getId();
+        Area area1Get = areaDAO.get(id);
+
+        assertNotNull(area);
+    }
+
+    // TODO - fixme. Este teste nao esta confiante! Mesmo sem rodar o 'areaDAO.update(area);' ele passa
+    @Test
+    public void testUpdate(){
+        Area area = Utils.getArea();
+
+        // salvamos como false
+        area.setActive(false);
+        areaDAO.createNew(area);
+        assertNotEquals(0, area.getId());
+
+        // recuperamos a area salva acima
+        Area area1 = areaDAO.get(area.getId());
+        assertEquals(false, area1.isActive());
+
+        area1.setActive(true);
+        areaDAO.update(area);
+
+        // validamos
+        Area area2 = areaDAO.get(area.getId());
+        assertEquals(true, area2.isActive());
+
+
     }
 }

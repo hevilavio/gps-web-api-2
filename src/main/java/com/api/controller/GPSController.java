@@ -6,7 +6,6 @@ import com.api.dao.PositionDAO;
 import com.api.dao.PositionDAOImpl;
 import com.api.model.Area;
 import com.api.model.Position;
-import com.api.model.Shop;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,7 +47,7 @@ public class GPSController {
      * <p/>
      * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
      */
-    @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
+    @RequestMapping(value = "/position/createNew/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
     public @ResponseBody Integer savePositionWithGet( //
                                                       @PathVariable String gpsId, @PathVariable String latitude, @PathVariable String longitude) {
 
@@ -71,11 +70,11 @@ public class GPSController {
      * Salva uma Area, tornando- a ativa, ou seja, desativando a Area atual caso exista.
      *
      * */
-    @RequestMapping(value = "/area/save", method = RequestMethod.POST)
-    public @ResponseBody Integer saveArea(ModelMap model, @RequestBody Area area){
-        logger.info("M=saveArea");
+    @RequestMapping(value = "/area/createNew", method = RequestMethod.POST)
+    public @ResponseBody Integer createNewArea(ModelMap model, @RequestBody Area area){
+        logger.info("M=createNewArea");
 
-        return areaDAO.save(area);
+        return areaDAO.createNew(area);
     }
 
 

@@ -7,10 +7,16 @@ import com.api.model.Area;
  */
 public interface AreaDAO {
 
-    public Integer save(Area area);
+    /**
+     * Salva uma nova area, inativando a antiga
+     * */
+    public Integer createNew(Area area);
 
     public boolean update(Area area);
 
     public Area getActiveArea();
 
+    public Area get(int id);
+
+    public void finish();
 }

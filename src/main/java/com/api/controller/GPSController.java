@@ -83,7 +83,7 @@ public class GPSController {
      * */
     @RequestMapping(value = "/area", method = RequestMethod.POST)
     public @ResponseBody Integer createNewArea(ModelMap model, @RequestBody Area area){
-        logger.info("M=createNewArea");
+        logger.info("M=createNewArea, area=" + area.toString());
 
         return areaDAO.createNew(area);
     }

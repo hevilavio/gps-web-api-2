@@ -60,7 +60,18 @@ public class AreaDAOImplTest {
         // validamos
         Area area2 = areaDAO.get(area.getId());
         assertEquals(true, area2.isActive());
+    }
 
+    @Test
+    public void testGetActive(){
+        Area area = Utils.getArea();
+        areaDAO.createNew(area);
+
+        Area activeArea = areaDAO.getActiveArea();
+
+        assertNotNull(activeArea);
+        assertEquals(true, activeArea.isActive());
+        assertEquals(3, activeArea.getPositions().size());
 
     }
 }

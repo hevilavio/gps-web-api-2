@@ -34,7 +34,7 @@ public class GPSControllerTest {
     }
 
     @Test
-    public void testCreateNewAreaAndInactivateLast() throws Exception {
+    public void testCreateNewAreaAndInactivateLast() {
         Area area = Utils.getArea();
         controller.createNewArea(null, area);
         Area activeArea = areaDAO.getActiveArea();
@@ -51,5 +51,16 @@ public class GPSControllerTest {
 
         assertEquals(newActiveArea.getId(), //
                 newArea.getId());
+    }
+
+    @Test
+    public void testGetActiveArea() {
+        Area newArea = Utils.getArea();
+        controller.createNewArea(null, newArea);
+
+
+        Area activeArea = areaDAO.getActiveArea();
+        UtilsValidator.validateArea(activeArea);
+        assertEquals(3, activeArea.getPositions().size());
     }
 }

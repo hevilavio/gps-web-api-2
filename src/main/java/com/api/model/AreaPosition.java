@@ -1,5 +1,7 @@
 package com.api.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,7 @@ public class AreaPosition {
     @Column(name = "id_area_position")
     private int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_area", nullable = false)
     private Area area;
@@ -44,6 +47,7 @@ public class AreaPosition {
         return longitude;
     }
 
+    @JsonIgnore
     public void setArea(Area area) {
         this.area = area;
     }

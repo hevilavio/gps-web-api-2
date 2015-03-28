@@ -36,7 +36,7 @@ public class AreaDAOImplTest {
             areaPositions.add(areaPosition);
         }
 
-        area.setAreaPositions(areaPositions);
+        area.setPositions(areaPositions);
 
         areaDAO.save(area);
     }

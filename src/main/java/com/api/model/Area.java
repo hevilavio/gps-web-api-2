@@ -19,15 +19,17 @@ import java.util.List;
 public class Area {
 
     public Area() {
-        areaPositions = new ArrayList<>();
+        positions = new ArrayList<>();
+        createdAt = Calendar.getInstance();
+        active = true;
     }
 
     // Todas as positions devem estar ordenadas
     public Area(AreaPosition... positions) {
-        areaPositions = new ArrayList<>();
+        this.positions = new ArrayList<>();
 
         for (AreaPosition position : positions) {
-            areaPositions.add(position);
+            this.positions.add(position);
         }
     }
 
@@ -43,7 +45,7 @@ public class Area {
     private boolean active;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "area")
-    private List<AreaPosition> areaPositions;
+    private List<AreaPosition> positions;
 
     public int getId() {
         return id;
@@ -57,8 +59,8 @@ public class Area {
         return active;
     }
 
-    public List<AreaPosition> getAreaPositions() {
-        return areaPositions;
+    public List<AreaPosition> getPositions() {
+        return positions;
     }
 
     public void setCreatedAt(Calendar createdAt) {
@@ -69,7 +71,7 @@ public class Area {
         this.active = active;
     }
 
-    public void setAreaPositions(List<AreaPosition> areaPositions) {
-        this.areaPositions = areaPositions;
+    public void setPositions(List<AreaPosition> positions) {
+        this.positions = positions;
     }
 }

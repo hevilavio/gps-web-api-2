@@ -66,7 +66,7 @@
 
             $("#save-polygon").click(function (){
                 var obj = {
-                    area: toAnotherArray(arrayMarker, function(lat, lng) { return { posX: lat, posY: lng } })
+                    positions: toAnotherArray(arrayMarker, function(lat, lng) { return { latitude: lat, longitude: lng } })
                 };
 
                 var json = JSON.stringify(obj);

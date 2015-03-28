@@ -1,7 +1,10 @@
 package com.api.controller;
 
+import com.api.dao.AreaDAO;
+import com.api.dao.AreaDAOImpl;
 import com.api.dao.PositionDAO;
 import com.api.dao.PositionDAOImpl;
+import com.api.model.Area;
 import com.api.model.Position;
 import com.api.model.Shop;
 import org.slf4j.LoggerFactory;
@@ -19,10 +22,12 @@ public class GPSController {
 
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GPSController.class);
     private PositionDAO positionDAO;
+    private AreaDAO areaDAO;
 
     GPSController() {
-        logger.info("M=GPSController, Iniciando...");
+        logger.info("M=GPSController, Iniciando");
         positionDAO = new PositionDAOImpl();
+        areaDAO = new AreaDAOImpl();
     }
 
     /**
@@ -66,16 +71,15 @@ public class GPSController {
      * Salva uma Area, tornando- a ativa, ou seja, desativando a Area atual caso exista.
      *
      * */
-    @RequestMapping(value = "/area/save/", method = RequestMethod.POST)
-    public @ResponseBody Integer saveArea(){
+    @RequestMapping(value = "/area/save", method = RequestMethod.POST)
+    public @ResponseBody Integer saveArea(ModelMap model, @RequestBody Area area){
+        logger.info("M=saveArea");
 
-
-
-        return 0;
+        return areaDAO.save(area);
     }
 
 
-                                                      public boolean isInvalidData(String latitude, String longitude) {
+    public boolean isInvalidData(String latitude, String longitude) {
         if ("inf".equalsIgnoreCase(latitude) || "inf".equalsIgnoreCase(longitude)) {
             return true;
         }

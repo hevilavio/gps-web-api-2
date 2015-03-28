@@ -44,7 +44,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public List<Pair<AreaPosition, AreaPosition>> findCandidatesToInterssect(Position position, Area area) {
 
-        final List<AreaPosition> areaPositions = area.getAreaPositions();
+        final List<AreaPosition> areaPositions = area.getPositions();
 
         double longitude = position.getLongitude();
 

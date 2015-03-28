@@ -55,4 +55,14 @@ public class AreaPosition {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder()
+                .append("[id=").append(id)
+                .append(", latitude=").append(latitude)
+                .append(", longitude=").append(longitude);
+
+        return sb.toString();
+    }
 }

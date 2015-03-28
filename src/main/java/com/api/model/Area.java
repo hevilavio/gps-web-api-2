@@ -72,6 +72,27 @@ public class Area {
     }
 
     public void setPositions(List<AreaPosition> positions) {
+        if(positions == null){
+            return;
+        }
+
+        // Relacionamento @OneToMany entre Area -> AreaPosition
+        for (AreaPosition position : positions) {
+            position.setArea(this);
+        }
+
         this.positions = positions;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder()
+                .append("[id=").append(id)
+                .append(", createdAt=").append(createdAt)
+                .append(", active=").append(active)
+                .append(", positions=").append(positions)
+                .append("]");
+
+        return sb.toString();
     }
 }

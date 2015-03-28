@@ -1,8 +1,8 @@
 var map;
 // [TODO] - Estas variaveis tem de estar na View
 var gpsId = 1010;
-var posX = -23.519697;
-var posY = -46.835308;
+var latitude = -23.519697;
+var longitude = -46.835308;
 var markers = [];
 var url = "/api/position/" + gpsId;
 
@@ -20,7 +20,7 @@ function initMap(dbl, posListener){
 function initialize() {
 
     var mapOptions = {
-        center: new google.maps.LatLng(posX, posY),
+        center: new google.maps.LatLng(latitude, longitude),
         zoom: 16,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDoubleClickZoom: true
@@ -47,16 +47,16 @@ function updatePosition(){
 }
 
 function getCurrentPosition(){
-    logger("M=getCurrentPosition, posX=" + posX + ", posY=" + posY);
+    logger("M=getCurrentPosition, latitude=" + latitude + ", longitude=" + longitude);
 
     $.get(url, function(data){
-        posX = data.lat;
-        posY = data.lon;
+        latitude = data.latitude;
+        longitude = data.longitude;
     }).fail(function(data){
         logger("Erro ao buscar Area atual. error=" + data.statusText);
     });
 
-    return new google.maps.LatLng(posX, posY);
+    return new google.maps.LatLng(latitude, longitude);
 }
 
 function controlMarkers(marker, removeOthers){

@@ -67,10 +67,21 @@ public class GPSController {
     }
 
     /**
+     * Retorna a atual Area ativa ou um JSON vazio, caso ela não exista.
+     *
+     * */
+    @RequestMapping(value = "/area", method = RequestMethod.GET)
+    public @ResponseBody Area getActiveArea(){
+        logger.info("M=getActiveArea");
+
+        return areaDAO.getActiveArea();
+    }
+
+    /**
      * Salva uma Area, tornando- a ativa, ou seja, desativando a Area atual caso exista.
      *
      * */
-    @RequestMapping(value = "/area/createNew", method = RequestMethod.POST)
+    @RequestMapping(value = "/area", method = RequestMethod.POST)
     public @ResponseBody Integer createNewArea(ModelMap model, @RequestBody Area area){
         logger.info("M=createNewArea");
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -6,8 +7,9 @@
       html { height: 100% }
       body {
         height: 100%;
-        margin: 150px 0 0px 100px;
-        padding: 0
+        margin: 30px 0 0px 100px;
+        padding: 0;
+        font-size: 12px;
       }
 
       #map-canvas {
@@ -16,6 +18,9 @@
        }
        #create-polygon {
             margin: 0 0 10px 0;
+       }
+       #titulo{
+            font-size: 14px;
        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -70,15 +75,32 @@
                 };
 
                 var json = JSON.stringify(obj);
-
-                // fazer o POST
                 logger(json);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/area',
+                    data: json,
+                    success: function(xhr){
+                        alert('Area salva com sucesso');
+                    }
+                });
             });
         });
 
     </script>
   </head>
   <body>
+    <div>
+        <p id="titulo"><b>Criar uma Área</b></p>
+
+        <p><b>Instruções:</b></p>
+        <p>1 - Com um duplo clique, marque os pontos no mapa para demarcar uma Área.</p>
+        <p>2 - Clique em 'create', para criar e visualizar a Área que você acabou de demarcar.</p>
+        <p>3 - Se estiver tudo OK, clique em 'save'. Se não, clique em 'clear' e volte ao passo 1.</p>
+        <p>4 - Pronto, a Área foi salva e já está ativa!</p>
+    </div>
+
     <input type="button" id="create-polygon" value="create"></input>
     <input type="button" id="clear-polygon" value="clear"></input>
     <input type="button" id="save-polygon" value="save"></input>

@@ -67,7 +67,7 @@ public class GPSController {
     }
 
     /**
-     * Retorna a atual Area ativa ou um JSON vazio, caso ela não exista.
+     * Retorna a atual Area ativa ou um JSON vazio, caso ela nao exista.
      *
      * */
     @RequestMapping(value = "/area", method = RequestMethod.GET)

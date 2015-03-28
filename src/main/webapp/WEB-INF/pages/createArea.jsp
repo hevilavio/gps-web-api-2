@@ -30,39 +30,29 @@
 
         var arrayMarker = [];
 
-        initMap(processDblClick, false);
+        initMap(addMarker, false);
 
-        function processDblClick(lat, lng) {
+        function addMarker(lat, lng) {
             var latLng = new google.maps.LatLng(lat, lng);
             var marker = createMarker(latLng, "Marker " + (arrayMarker.length + 1));
 
             arrayMarker.push(marker);
 
-            logger("processDblClick, lat=" + lat + ", lng=" + lng);
+            logger("addMarker, lat=" + lat + ", lng=" + lng);
         }
 
         $(document).ready(function(){
-            var area;
+            var polygon ;
             $("#create-polygon").click(function(){
-
-                area = new google.maps.Polygon({
-                    paths: toAnotherArray(arrayMarker, function(lat, lng) { return new google.maps.LatLng(lat, lng) }),
-                    strokeColor: '#FF0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 3,
-                    fillColor: '#FF0000',
-                    fillOpacity: 0.35
-                  });
-
-                area.setMap(map);
+                polygon = createPolygonUsingMarkers();
 
                 logger("#create-polygon");
             });
 
             $("#clear-polygon").click(function(){
 
-                if(area != undefined){
-                    area.setMap(null);
+                if(polygon != undefined){
+                    polygon.setMap(null);
                 }
                 clearMarkers(arrayMarker);
                 arrayMarker = [];
@@ -90,8 +80,38 @@
                     }
                 });
             });
+
+            loadCurrentArea();
         });
 
+        function loadCurrentArea(){
+
+            $.get('/api/area', function(area){
+
+                for(var i = 0; i < area.positions.length; i++){
+                    var position = area.positions[i];
+                    addMarker(position.latitude, position.longitude);
+                }
+                createPolygonUsingMarkers();
+
+            }).fail(function(data){
+                alert("Erro ao buscar Area atual.\nerror=" + data.statusText);
+            });
+        }
+
+        function createPolygonUsingMarkers(){
+            var polygon = new google.maps.Polygon({
+                paths: toAnotherArray(arrayMarker, function(lat, lng) { return new google.maps.LatLng(lat, lng) }),
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 3,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35
+            });
+
+            polygon.setMap(map);
+            return polygon;
+        }
     </script>
   </head>
   <body>

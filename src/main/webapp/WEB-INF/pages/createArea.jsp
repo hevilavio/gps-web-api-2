@@ -80,9 +80,13 @@
                 $.ajax({
                     type: 'POST',
                     url: '/api/area',
+                    contentType: 'application/json',
                     data: json,
                     success: function(xhr){
                         alert('Area salva com sucesso');
+                    },
+                    error: function(xhr){
+                        alert('Erro ao salvar Area. \nerror=' + xhr.statusText);
                     }
                 });
             });

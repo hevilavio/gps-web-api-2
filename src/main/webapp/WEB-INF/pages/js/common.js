@@ -1,11 +1,10 @@
 var map;
 // [TODO] - Estas variaveis tem de estar na View
-var gpsId = 0;
+var gpsId = 1010;
 var posX = -23.519697;
 var posY = -46.835308;
 var markers = [];
-// [TODO] - Alterar url
-var url = "http://ip-api.com/json";
+var url = "/api/position/" + gpsId;
 
 var whenDblClick;
 var usePositionListener;

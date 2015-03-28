@@ -25,26 +25,11 @@ public class GPSController {
         positionDAO = new PositionDAOImpl();
     }
 
-    @RequestMapping(value = "{name}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    Shop getShopInJSON(@PathVariable String name) {
-
-        Shop shop = new Shop();
-        shop.setName(name);
-        shop.setStaffName(new String[] { "mkyong1", "mkyong2", name });
-
-        return shop;
-
-    }
-
     /**
      * Retorna a atual posicao de um determinado GPS
      */
     @RequestMapping(value = "/position/{gpsId}", method = RequestMethod.GET)
-    public
-    @ResponseBody
-    Position getPosition(@PathVariable String gpsId) {
+    public @ResponseBody Position getPosition(@PathVariable String gpsId) {
 
         logger.info("M=getCurrent, gpsId=" + gpsId);
 
@@ -55,27 +40,12 @@ public class GPSController {
 
     /**
      * Insere a posicao de um GPS
-     */
-    @RequestMapping(value = "/position", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    Integer savePosition(ModelMap model, @RequestBody Position position) {
-
-        logger.info("M=savePosition, position=" + position.toString());
-
-        positionDAO.insert(position);
-
-        return position.getId();
-    }
-
-    /**
-     * Insere a posicao de um GPS
      * <p/>
      * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
      */
     @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
     public @ResponseBody Integer savePositionWithGet( //
-            @PathVariable String gpsId, @PathVariable String latitude, @PathVariable String longitude) {
+                                                      @PathVariable String gpsId, @PathVariable String latitude, @PathVariable String longitude) {
 
         logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", latitude=" + latitude + ", longitude=" + longitude);
 
@@ -87,13 +57,25 @@ public class GPSController {
         position.setGpsId(Integer.parseInt(gpsId));
         position.setLatitude(Double.parseDouble(latitude));
         position.setLongitude(Double.parseDouble(longitude));
-        //position.setDate(Calendar.getInstance());
 
         positionDAO.insert(position);
         return position.getId();
     }
 
-    public boolean isInvalidData(String latitude, String longitude) {
+    /**
+     * Salva uma Area, tornando- a ativa, ou seja, desativando a Area atual caso exista.
+     *
+     * */
+    @RequestMapping(value = "/area/save/", method = RequestMethod.POST)
+    public @ResponseBody Integer saveArea(){
+
+
+
+        return 0;
+    }
+
+
+                                                      public boolean isInvalidData(String latitude, String longitude) {
         if ("inf".equalsIgnoreCase(latitude) || "inf".equalsIgnoreCase(longitude)) {
             return true;
         }

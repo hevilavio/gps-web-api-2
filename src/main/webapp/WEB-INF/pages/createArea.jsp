@@ -29,6 +29,7 @@
     <script type="text/javascript">
 
         var arrayMarker = [];
+        var polygon;
 
         initMap(addMarker, false);
 
@@ -42,9 +43,9 @@
         }
 
         $(document).ready(function(){
-            var polygon ;
+
             $("#create-polygon").click(function(){
-                polygon = createPolygonUsingMarkers();
+                createPolygonUsingMarkers();
 
                 logger("#create-polygon");
             });
@@ -74,9 +75,11 @@
                     data: json,
                     success: function(xhr){
                         alert('Area salva com sucesso');
+                        location.reload();
                     },
                     error: function(xhr){
                         alert('Erro ao salvar Area. \nerror=' + xhr.statusText);
+                        location.reload();
                     }
                 });
             });
@@ -94,13 +97,17 @@
                 }
                 createPolygonUsingMarkers();
 
+                // TODO - fixme. O ideal é que isso viesse no objeto
+                var center = area.positions[area.positions / 2];
+                map.setCenter(new google.maps.LatLng(center.latitude, center.longitude));
+
             }).fail(function(data){
                 alert("Erro ao buscar Area atual.\nerror=" + data.statusText);
             });
         }
 
         function createPolygonUsingMarkers(){
-            var polygon = new google.maps.Polygon({
+            polygon = new google.maps.Polygon({
                 paths: toAnotherArray(arrayMarker, function(lat, lng) { return new google.maps.LatLng(lat, lng) }),
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
@@ -110,7 +117,6 @@
             });
 
             polygon.setMap(map);
-            return polygon;
         }
     </script>
   </head>

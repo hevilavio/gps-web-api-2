@@ -47,7 +47,7 @@ public class GPSController {
      * <p/>
      * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
      */
-    @RequestMapping(value = "/position/createNew/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
+    @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
     public @ResponseBody Integer savePositionWithGet( //
                                                       @PathVariable String gpsId, @PathVariable String latitude, @PathVariable String longitude) {
 

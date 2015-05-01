@@ -145,10 +145,9 @@ void UTC()//get the UTC data -- the time
     }
   }
 }
-double latitude()//get latitude
+void latitude()//get latitude
 {
   char i;
-  double latitude;
   char lat[10]={
     '0','0','0','0','0','0','0','0','0','0'
   };
@@ -167,11 +166,8 @@ double latitude()//get latitude
       if(i==10)
       {
         i=0;
-        //Serial.println(Datatransfer(lat,5)/100.0,7);//print latitude 
-        Serial.print(Datatransfer(lat,5)/100.0,7);
-        
-        latitude = Datatransfer(lat,5)/100.0,7;
-        return latitude;
+        Serial.print(Datatransfer(lat,5)/100.0,7);//print latitude 
+        return;
       }  
     }
   }
@@ -200,10 +196,9 @@ void lat_dir()//get dimensions
     }
   }
 }
-double longitude()//get longitude
+void longitude()//get longitude
 {
   char i;
-  double longitude;
   char lon[11]={
     '0','0','0','0','0','0','0','0','0','0','0'
   };
@@ -221,11 +216,8 @@ double longitude()//get longitude
       if(i==11)
       {
         i=0;
-        //Serial.println(Datatransfer(lon,5)/100.0,7);
         Serial.print(Datatransfer(lon,5)/100.0,7);
-        
-        longitude = Datatransfer(lon,5)/100.0,7;
-        return longitude;
+        return;
       }  
     }
   }
@@ -284,43 +276,125 @@ void altitude()//get altitude data
   }
 }
 
-byte gsmDriverPin[3] = {
-  3,4,5};//The default digital driver pins for the GSM and GPS mode
-//If you want to change the digital driver pins
-//or you have a conflict with D3~D5 on Arduino board,
-//you can remove the J10~J12 jumpers to reconnect other driver pins for the module!
+/*
+  Pinos:
+  
+  UART: no meio
+  S1: PROG para upload de codigo, COMM para uso com Arduino.
+  S2: ARDUINO para uso com o mesmo, USB para conectar via Serial.
+  JUMPERS: Todos os 3 conectados.
+
+  Verificar:
+  
+  * Antena do GPS esta bem conectada e posicionada.
+  * SIM CARD tem conectividade com a Operadora
+  * SIM CARD tem pacote de dados.
+  * 12V para usar GPRS.
+  
+  
+*/
+
+// Configuracoes do dispositivo
+const char* gpsId = "1011";
+const char* serverUrl = "apiv1-gpsapi.rhcloud.com/api/position/save";
+const int secIntervalData = 5;
+//
+
 void setup()
 {
-  //Init the driver pins for GSM function
-  for(int i = 0 ; i < 3; i++){
-    pinMode(gsmDriverPin[i],OUTPUT);
-  }
-  digitalWrite(5,HIGH);//Output GSM Timing 
+  //The default digital driver pins for the GSM and GPS mode
+  pinMode(3,OUTPUT);
+  pinMode(4,OUTPUT);
+  pinMode(5,OUTPUT);
+  
+  //Output GSM Timing
+  digitalWrite(5,HIGH); 
   delay(1500);
-  digitalWrite(5,LOW);  
+  digitalWrite(5,LOW);
   
   digitalWrite(3,LOW);//Enable the GSM mode
-  digitalWrite(4,HIGH);//Disable the GPS mode
+  digitalWrite(4,LOW);//Enable the GPS mode
   delay(2000);
+
   Serial.begin(9600); //set the baud rate
   delay(5000);//call ready
   delay(5000);
-  delay(5000);
+  delay(5000);  
   
-  start_GSM();
-  start_GPS();
+  
+  startGPS();
+  startGPRS();
 }
 
- 
 
 void loop()
 {
-    //testHttpGet();
+    info("loop interaction");
     
-    //readGpsInfo();
+    
+    sendToSerial("AT+HTTPPARA=\"URL\"");
+    
+    sendToSerial(",");
+    
+    sendToSerial("\""); // aspas
+    sendToSerial(serverUrl);
+    sendToSerial("/");
+    sendToSerial(gpsId);
+    sendToSerial("/");
+    latitude();
+    sendToSerial("/");
+    longitude();
+    sendToSerial("/");
 
-    readAndSendGpsData();
+    sendToSerial("\""); // aspas
+    
+    Serial.println("");     
+    delay(2 * 1000);
+    
+    Serial.println("AT+HTTPACTION=0"); // GET Action
+    delay(7 * 1000);
+
+    delay(secIntervalData * 1000);
+
     /*
+    while(1)
+    { 
+        testGPS();
+        testGPRS();
+    }
+    */
+}
+
+void startGPS(){
+    Serial.println("AT");   
+    delay(2000);
+    //turn on GPS power supply
+    Serial.println("AT+CGPSPWR=1");
+    delay(1000);
+    //reset GPS in autonomy mode
+    Serial.println("AT+CGPSRST=1");
+    delay(1000); 
+}
+
+void startGPRS(){
+  
+    Serial.println("AT+SAPBR=3,1,\"APN\",\"tim.br\"");
+    delay(2000);
+    Serial.println("AT+SAPBR=3,1,\"USER\",\"tim\"");
+    delay(2000);
+    Serial.println("AT+SAPBR=3,1,\"PWD\",\"tim\"");
+    delay(2000);
+    Serial.println("AT+SAPBR=3,1,\"Contype\",\"GPRS\"");
+    delay(2000);
+    Serial.println("AT+SAPBR=1,1");
+    delay(10 * 1000);
+    Serial.println("AT+HTTPINIT");
+    delay(2 * 1000);
+    Serial.println("AT+HTTPPARA=\"CID\",1");
+    delay(2 * 1000);
+ }
+ 
+ void testGPS(){
     Serial.print("UTC:");
     UTC();
     Serial.print("Lat:");
@@ -335,112 +409,43 @@ void loop()
     altitude();
     Serial.println(' ');
     Serial.println(' ');
-    */
-    delay(5 * 1000);
-
-}
-double lastLat;
-double lastLon;
-void readGpsInfo()
-{
-   Serial.println("gri.i");
-
-   double lat = latitude();
-   double lon = longitude();
-   
-   lastLat = lat;
-   lastLon = lon;
-   
-   Serial.print("Lat: ");
-   Serial.println(lat); 
-   
-   Serial.print("Long: ");
-   Serial.println(lon); 
-
-   //makeUrl(lat, lon);
-
-   Serial.println("gri.s");
-}
-
-void testHttpGet(){
-  Serial.println("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/1010/23.3322410/46.5072746/\"");
-  
-  delay(3 * 1000);
-  Serial.println("AT+HTTPACTION=0"); //now GET action
-  delay(7 * 1000);
-
-  Serial.println("AT+HTTPREAD=1,200"); //now GET action
-}
-
-// Usado temporariamente, o correto seria enviar dados via POST
-void readAndSendGpsData(){
-  Serial.print("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/");
-
-  Serial.print("1011");// gpsId
-  Serial.print("/");
-
-  latitude();// manda latitude para porta serial
-  Serial.print("/");
-
-  longitude();
-  Serial.print("/");
-
-  Serial.println("\"");// ->"<- para "enviar" o comando  
-  delay(3 * 1000);
-
-  Serial.println("AT+HTTPACTION=0"); //now GET action
-  delay(7 * 1000);
-}
-
-void showResponseCommand(){
-   if(Serial.available())
-   {
-      Serial.print(Serial.readStringUntil('\n'));
-    } 
-}
-void start_GSM(){
-  
-    delay(10 * 1000);
-    Serial.println("AT+SAPBR=3,1,\"APN\",\"tim.br\"");
-    delay(2000);
-    Serial.println("AT+SAPBR=3,1,\"USER\",\"tim\"");
-    delay(2000);
-    Serial.println("AT+SAPBR=3,1,\"PWD\",\"tim\"");
-    delay(2000);
-    Serial.println("AT+SAPBR=3,1,\"Contype\",\"GPRS\"");
-    delay(2000);
-    Serial.println("AT+SAPBR=1,1");
-    delay(10 * 1000);
-    Serial.println("AT+HTTPINIT");
-    delay(2000);
-    Serial.println("AT+HTTPPARA=\"CID\",1");
-    delay(2000);
  }
-void start_GPS(){
-    Serial.println("AT");   
-    delay(2000);
-    //turn on GPS power supply
-    Serial.println("AT+CGPSPWR=1");
-    delay(1000);
-    //reset GPS in autonomy mode
-    Serial.println("AT+CGPSRST=1");
-    delay(1000); 
+ 
+void testGPRS(){
+    Serial.println("AT+HTTPPARA=\"URL\",\"apiv1-gpsapi.rhcloud.com/api/position/save/1010/100/200/\"");
+    delay(2 * 1000);
+    Serial.println("AT+HTTPACTION=0"); //GET action
+    delay(15 * 1000);  
 }
 
-void makeUrl(double lat, double lon){
-  
-   char url[100]; 
-   
-   strcat(url, "http://site.com/savedata?");
-   strcat(url, "latitude=");
-   strcat(url, toChar(lat));
-   strcat(url, ", longitude=");
-   strcat(url, toChar(lon));
+int debugActived = 1;
+int infoActived = 1;
 
-   Serial.print("url: ");
-   Serial.println(url); 
+void debug(char *msg){
+  if(debugActived == 1){
+    Serial.println(msg);
+  } 
 }
 
-char* toChar(double d){
-   return "A"; 
+void info(char *msg){
+  if(infoActived == 1){
+    Serial.println(msg);
+  } 
 }
+
+void qMark(){
+    Serial.print("\"");
+}
+void slash(){
+   Serial.print("/");
+}
+
+void sendToSerial(const char *msg){
+  Serial.print(msg);
+}
+
+
+
+
+
+

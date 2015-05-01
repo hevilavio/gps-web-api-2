@@ -1,0 +1,25 @@
+
+# Configurar GPRS e HTTP
+
+AT+SAPBR=3,1,"APN","tim.br"
+
+AT+SAPBR=3,1,"USER","tim"
+
+AT+SAPBR=3,1,"PWD","tim"
+
+AT+SAPBR=3,1,"Contype","GPRS"
+
+AT+SAPBR=1,1
+
+AT+HTTPINIT
+
+AT+HTTPPARA="CID",1
+
+# Teste
+AT+HTTPPARA="URL","apiv1-gpsapi.rhcloud.com/api/position/save/1010/100/201/"
+
+# GET
+AT+HTTPACTION=0
+
+# read the first 100 charators on downloaded from the website
+AT+HTTPREAD=1,100

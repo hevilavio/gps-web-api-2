@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+/**
+ * Camada de servico nao foi implementada
+ * devido a pouca logica entre Controller e DAO.
+ *
+ * */
 @Controller
 @RequestMapping("/api")
 public class GPSController {
@@ -51,10 +57,12 @@ public class GPSController {
      * <p/>
      * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
      */
-    @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
+    @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}/{dirLatitude}/{dirLongitude}", method = RequestMethod.GET)
     public @ResponseBody Integer savePositionWithGet(@PathVariable String gpsId,
                                                      @PathVariable String latitude,
-                                                     @PathVariable String longitude) {
+                                                     @PathVariable String longitude,
+                                                     @PathVariable String dirLatitude,
+                                                     @PathVariable String dirLongitude) {
 
         logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", latitude=" + latitude + ", longitude=" + longitude);
 
@@ -62,16 +70,20 @@ public class GPSController {
             return 0;
         }
 
-        Position position = new Position();
-        position.setGpsId(Integer.parseInt(gpsId));
-        position.setLatitude(Double.parseDouble(latitude));
-        position.setLongitude(Double.parseDouble(longitude));
+        Position position = new Position(Integer.parseInt(gpsId),
+                Double.parseDouble(latitude),
+                Double.parseDouble(longitude),
+                dirLatitude,
+                dirLongitude
+                );
 
         positionDAO.insert(position);
         logAreaInfo(position);
 
         return position.getId();
     }
+
+
 
     /**
      * Retorna a atual Area ativa ou um JSON vazio, caso ela nao exista.

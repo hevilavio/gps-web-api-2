@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
+import com.api.model.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,11 +27,7 @@ public class PositionDAOImplTest {
     @Test
     public void canInsert() {
 
-        Position position = new Position();
-        position.setLatitude(10);
-        position.setLongitude(20);
-        position.setGpsId(1010);
-        position.setDate(Calendar.getInstance());
+        Position position = new Position(1010, 10, 20, Direction.NORTH.getValue(), Direction.WEST.getValue());
 
         positionDAO.insert(position);
 
@@ -71,11 +68,7 @@ public class PositionDAOImplTest {
     }
 
     private Position insertPosition(Integer gpsId, Calendar calendar) {
-        Position position = new Position();
-        position.setLatitude(10);
-        position.setLongitude(20);
-        position.setGpsId(gpsId);
-        position.setDate(calendar);
+        Position position = new Position(gpsId, 10, 20, Direction.NORTH.getValue(), Direction.WEST.getValue());
 
         positionDAO.insert(position);
 

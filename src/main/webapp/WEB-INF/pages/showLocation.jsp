@@ -7,6 +7,7 @@
       body { height: 100%; margin: 0; padding: 0 }
       #map-canvas {
         border: 1px solid #000000;
+        height: 100%;
       }
       #btn-lock{
         margin: 20px 0px 20px 20px;

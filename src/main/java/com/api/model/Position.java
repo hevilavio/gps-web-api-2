@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.beans.Transient;
 import java.util.Calendar;
 
 /**
@@ -23,7 +24,31 @@ public class Position {
 
     private double longitude;
 
+    private String dirLatitude; // N or S
+
+    private String dirLongitude;// W or E
+
     private Calendar date;
+
+    private Position() {
+    }
+
+    private Position(int id, int gpsId, double latitude, double longitude, String dirLatitude, String dirLongitude) {
+        this(gpsId, latitude, longitude, dirLatitude, dirLongitude);
+        this.id = id;
+    }
+    public Position(int gpsId, double latitude, double longitude, String dirLatitude, String dirLongitude) {
+
+        Direction.assertLatitudeDirection(dirLatitude);
+        Direction.assertLongitudeDirection(dirLongitude);
+
+        this.gpsId = gpsId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.dirLatitude = dirLatitude;
+        this.dirLongitude = dirLongitude;
+        this.date = Calendar.getInstance();
+    }
 
     public int getId() {
         return id;
@@ -41,23 +66,43 @@ public class Position {
         return longitude;
     }
 
+    public String getDirLatitude() {
+        return dirLatitude;
+    }
+
+    public String getDirLongitude() {
+        return dirLongitude;
+    }
+
     public Calendar getDate() {
         return date;
     }
 
-    public void setGpsId(int gpsId) {
+    private void setId(int id) {
+        this.id = id;
+    }
+
+    private void setGpsId(int gpsId) {
         this.gpsId = gpsId;
     }
 
-    public void setLatitude(double latitude) {
+    private void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(double longitude) {
+    private void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public void setDate(Calendar date) {
+    private void setDirLatitude(String dirLatitude) {
+        this.dirLatitude = dirLatitude;
+    }
+
+    private void setDirLongitude(String dirLongitude) {
+        this.dirLongitude = dirLongitude;
+    }
+
+    private void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -68,6 +113,24 @@ public class Position {
         sb.append("[latitude=").append(latitude).append(", longitude=").append(longitude).append("]");
 
         return sb.toString();
+    }
 
+    /**
+     * Na representacao do Google Maps, latitude e longitude podem ter
+     * valores negativos, de acordo com a direcao.
+     *
+     * */
+    @Transient
+    public Position toGoogleMapsPosition(){
+
+        boolean latitudeShoudBeNegative = Direction.fromValue(dirLatitude).equals(Direction.SOUTH);
+        boolean longitudeShoudBeNegative = Direction.fromValue(dirLongitude).equals(Direction.WEST);
+
+        return new Position(id,
+                gpsId,
+                latitudeShoudBeNegative ? latitude * -1 : latitude,
+                longitudeShoudBeNegative ? longitude * -1 : longitude,
+                Direction.NO_ONE.getValue(),
+                Direction.NO_ONE.getValue());
     }
 }

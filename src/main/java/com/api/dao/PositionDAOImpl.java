@@ -25,7 +25,7 @@ public class PositionDAOImpl implements PositionDAO {
 
     @Override
     public Integer insert(Position position) {
-        position.setDate(Calendar.getInstance());
+
         session.save(position);
         return position.getId();
     }

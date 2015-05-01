@@ -9,9 +9,11 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost/gpsapi</property>
-        <property name="connection.username">root</property>
-        <property name="connection.password">root</property>
+        <property name="connection.url">
+            jdbc:mysql://3dbea398-9897-4607-af75-a31b0138148d.mysql.sequelizer.com/db3dbea39898974607af75a31b0138148d
+        </property>
+        <property name="connection.username">iytyuohpjmvrzvlm</property>
+        <property name="connection.password">fs2UeEZcfHdyzpQp3nwmJR7aqG8avwZQEV45rMBWfR2pEZjhUHURBp2vu2CEFYNR</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
@@ -30,7 +32,7 @@
         <property name="format_sql">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">validate</property>
+        <property name="hbm2ddl.auto">create</property>
 
         <property name="connection.autocommit">true</property>
         <property name="javax.persistence.validation.mode">none</property>

@@ -16,7 +16,10 @@
 // #        If you get 'inf' values, go outdoors and wait until it is connected.
 // #        wiki link- http://www.dfrobot.com/wiki/index.php/GPS/GPRS/GSM_Module_V3.0_(SKU:TEL0051)
  
-double Datatransfer(char *data_buf,char num)//convert the data to the float type
+ double Datatransfer(char *data_buf,char num){
+     return DatatransferWithConv(data_buf, num, 0);
+ }
+double DatatransferWithConv(char *data_buf,char num, int convert)//convert the data to the float type
 {                                           //*data_buf：the data array                                       
   double temp=0.0;                           //the number of the right of a decimal point
   unsigned char i,j;
@@ -45,7 +48,19 @@ double Datatransfer(char *data_buf,char num)//convert the data to the float type
     for(j=0;j<num;j++)
       temp=temp/10 ;
   }
-  return temp;
+  
+  if(convert == 0){
+      return temp;
+  }
+  
+  
+  // Special thanks to:
+  // http://home.online.no/~sigurdhu/Deg_formats.htm
+  // Supouse temp=2333.23
+  
+  int D = (int)(temp/100); // D->23
+  double m = temp - (D * 100); // m = D -> 2333.23 - 2300 -> 33.23
+  return (D + (m/60)) * 100; // 23 + 0,5537 -> 23,5537 (* 100 ??)
 }
  
 char ID()//Match the ID commands
@@ -166,7 +181,8 @@ void latitude()//get latitude
       if(i==10)
       {
         i=0;
-        Serial.print(Datatransfer(lat,5)/100.0,7);//print latitude 
+        
+        Serial.print(DatatransferWithConv(lat, 5, 1)/100.0,7);//print latitude 
         return;
       }  
     }
@@ -185,7 +201,6 @@ void lat_dir()//get dimensions
       {
         val = Serial.read();
         Serial.write(val);
-        Serial.println();
         i++;
       }
       if(i==1)
@@ -216,7 +231,7 @@ void longitude()//get longitude
       if(i==11)
       {
         i=0;
-        Serial.print(Datatransfer(lon,5)/100.0,7);
+        Serial.print(DatatransferWithConv(lon, 5, 1)/100.0,7);
         return;
       }  
     }
@@ -235,7 +250,6 @@ void lon_dir()//get direction data
       {
         val = Serial.read();
         Serial.write(val); //Serial.println(val,BYTE);
-        Serial.println();
         i++;
       }
       if(i==1)
@@ -298,6 +312,7 @@ void altitude()//get altitude data
 const char* gpsId = "1011";
 const char* serverUrl = "apiv1-gpsapi.rhcloud.com/api/position/save";
 const int secIntervalData = 5;
+const int testMode = 0;
 //
 
 void setup()
@@ -331,7 +346,14 @@ void loop()
 {
     info("loop interaction");
     
-    
+    if(testMode == 1){
+      while(1)
+      { 
+          testGPS();
+          //testGPRS();
+      }
+    }
+     
     sendToSerial("AT+HTTPPARA=\"URL\"");
     
     sendToSerial(",");
@@ -345,7 +367,12 @@ void loop()
     sendToSerial("/");
     longitude();
     sendToSerial("/");
-
+    lat_dir();
+    sendToSerial("/");
+    lon_dir();
+    sendToSerial("/");
+    
+    
     sendToSerial("\""); // aspas
     
     Serial.println("");     
@@ -356,13 +383,6 @@ void loop()
 
     delay(secIntervalData * 1000);
 
-    /*
-    while(1)
-    { 
-        testGPS();
-        testGPRS();
-    }
-    */
 }
 
 void startGPS(){
@@ -399,13 +419,13 @@ void startGPRS(){
     UTC();
     Serial.print("Lat:");
     latitude();
-    Serial.print("Dir:");
+    Serial.print("\nDir:");
     lat_dir();
-    Serial.print("Lon:");
+    Serial.print("\nLon:");
     longitude();
-    Serial.print("Dir:");
+    Serial.print("\nDir:");
     lon_dir();
-    Serial.print("Alt:");
+    Serial.print("\nAlt:");
     altitude();
     Serial.println(' ');
     Serial.println(' ');

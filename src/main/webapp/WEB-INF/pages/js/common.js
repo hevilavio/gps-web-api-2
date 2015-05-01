@@ -33,7 +33,7 @@ function initialize() {
 
 function initPositionListener(){
     if(usePositionListener){
-        setInterval(updatePosition, 2000);
+        setInterval(updatePosition, 5000);
     }
 }
 
@@ -42,7 +42,7 @@ function updatePosition(){
 
     var current = createMarker(currentPosition, "Position X");
     controlMarkers(current, true);
-    controlCenterMap(current);
+    //controlCenterMap(current);
 }
 
 function getCurrentPosition(){
@@ -75,7 +75,7 @@ function controlCenterMap(marker){
 
     map.setCenter(latlngbounds.getCenter());
     map.fitBounds(latlngbounds);
-    //map.setZoom(16);
+    map.setZoom(16);
 }
 
 function addDblClickEvent(){

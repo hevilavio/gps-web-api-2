@@ -16,10 +16,7 @@
 // #        If you get 'inf' values, go outdoors and wait until it is connected.
 // #        wiki link- http://www.dfrobot.com/wiki/index.php/GPS/GPRS/GSM_Module_V3.0_(SKU:TEL0051)
  
- double Datatransfer(char *data_buf,char num){
-     return DatatransferWithConv(data_buf, num, 0);
- }
-double DatatransferWithConv(char *data_buf,char num, int convert)//convert the data to the float type
+double Datatransfer(char *data_buf,char num, int convert)//convert the data to the float type
 {                                           //*data_buf：the data array                                       
   double temp=0.0;                           //the number of the right of a decimal point
   unsigned char i,j;
@@ -50,10 +47,8 @@ double DatatransferWithConv(char *data_buf,char num, int convert)//convert the d
   }
   
   if(convert == 0){
-      return temp;
+    return temp;
   }
-  
-  
   // Special thanks to:
   // http://home.online.no/~sigurdhu/Deg_formats.htm
   // Supouse temp=2333.23
@@ -61,6 +56,7 @@ double DatatransferWithConv(char *data_buf,char num, int convert)//convert the d
   int D = (int)(temp/100); // D->23
   double m = temp - (D * 100); // m = D -> 2333.23 - 2300 -> 33.23
   return (D + (m/60)) * 100; // 23 + 0,5537 -> 23,5537 (* 100 ??)
+  
 }
  
 char ID()//Match the ID commands
@@ -131,7 +127,7 @@ void UTC()//get the UTC data -- the time
       if(i==9)
       {
         i=0;
-        t=Datatransfer(time,2);//convert data
+        t=Datatransfer(time,2,0);//convert data
         t=t-30000.00;//convert to the chinese time GMT+8 Time zone
         long time=t;
         int h=time/10000;
@@ -181,8 +177,7 @@ void latitude()//get latitude
       if(i==10)
       {
         i=0;
-        
-        Serial.print(DatatransferWithConv(lat, 5, 1)/100.0,7);//print latitude 
+        Serial.print(Datatransfer(lat,5,1)/100.0,7);//print latitude 
         return;
       }  
     }
@@ -200,7 +195,7 @@ void lat_dir()//get dimensions
       if(Serial.available())
       {
         val = Serial.read();
-        Serial.write(val);
+        Serial.print(val);
         i++;
       }
       if(i==1)
@@ -231,7 +226,7 @@ void longitude()//get longitude
       if(i==11)
       {
         i=0;
-        Serial.print(DatatransferWithConv(lon, 5, 1)/100.0,7);
+        Serial.print(Datatransfer(lon,5,1)/100.0,7);
         return;
       }  
     }
@@ -249,7 +244,7 @@ void lon_dir()//get direction data
       if(Serial.available())
       {
         val = Serial.read();
-        Serial.write(val); //Serial.println(val,BYTE);
+        Serial.print(val); //Serial.println(val,BYTE);
         i++;
       }
       if(i==1)
@@ -283,7 +278,7 @@ void altitude()//get altitude data
       if(flag)
       {
         i=0;
-        Serial.println(Datatransfer(alt,1),1);//print altitude data
+        Serial.println(Datatransfer(alt,1,0),1);//print altitude data
         return;
       }  
     }
@@ -349,11 +344,11 @@ void loop()
     if(testMode == 1){
       while(1)
       { 
-          testGPS();
-          //testGPRS();
+        testGPS();
+      //testGPRS();
       }
     }
-     
+    
     sendToSerial("AT+HTTPPARA=\"URL\"");
     
     sendToSerial(",");
@@ -371,8 +366,7 @@ void loop()
     sendToSerial("/");
     lon_dir();
     sendToSerial("/");
-    
-    
+
     sendToSerial("\""); // aspas
     
     Serial.println("");     
@@ -383,6 +377,13 @@ void loop()
 
     delay(secIntervalData * 1000);
 
+    /*
+    while(1)
+    { 
+        testGPS();
+        testGPRS();
+    }
+    */
 }
 
 void startGPS(){
@@ -419,13 +420,13 @@ void startGPRS(){
     UTC();
     Serial.print("Lat:");
     latitude();
-    Serial.print("\nDir:");
+    Serial.print("Dir:");
     lat_dir();
-    Serial.print("\nLon:");
+    Serial.print("Lon:");
     longitude();
-    Serial.print("\nDir:");
+    Serial.print("Dir:");
     lon_dir();
-    Serial.print("\nAlt:");
+    Serial.print("Alt:");
     altitude();
     Serial.println(' ');
     Serial.println(' ');

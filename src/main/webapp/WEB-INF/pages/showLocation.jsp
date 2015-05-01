@@ -9,7 +9,7 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA23uWRpiaM0b4tS1BLI3YXVHWrE9Q9_xQ&sensor=false"></script>
-	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="/js/common.js"></script>
 	<script type="text/javascript">
         var url = "/api/position/" + "${gpsId}";
 

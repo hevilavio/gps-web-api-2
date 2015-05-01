@@ -49,7 +49,7 @@ public class GPSController {
 
         Position currentPosition = positionDAO.getLast(Integer.parseInt(gpsId));
 
-        return currentPosition;
+        return currentPosition.toGoogleMapsPosition();
     }
 
     /**

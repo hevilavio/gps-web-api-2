@@ -110,7 +110,11 @@ public class Position {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("[latitude=").append(latitude).append(", longitude=").append(longitude).append("]");
+        sb.append("[latitude=").append(latitude)
+                .append(", longitude=").append(longitude)
+                .append(", dirLatitude=").append(dirLatitude)
+                .append(", dirLongitude=").append(dirLongitude)
+                .append("]");
 
         return sb.toString();
     }

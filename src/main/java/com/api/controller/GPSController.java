@@ -78,7 +78,7 @@ public class GPSController {
                 );
 
         positionDAO.insert(position);
-        logAreaInfo(position);
+        logAreaInfo(position.toGoogleMapsPosition());
 
         return position.getId();
     }

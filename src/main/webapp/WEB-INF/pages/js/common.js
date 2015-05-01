@@ -42,7 +42,11 @@ function updatePosition(){
 
     var current = createMarker(currentPosition, "Position X");
     controlMarkers(current, true);
-    //controlCenterMap(current);
+
+    // botao na View showLocation
+    if(locked){
+        controlCenterMap(current);
+    }
 }
 
 function getCurrentPosition(){

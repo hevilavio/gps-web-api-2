@@ -75,7 +75,7 @@ function controlCenterMap(marker){
 
     map.setCenter(latlngbounds.getCenter());
     map.fitBounds(latlngbounds);
-    map.setZoom(16);
+    //map.setZoom(16);
 }
 
 function addDblClickEvent(){

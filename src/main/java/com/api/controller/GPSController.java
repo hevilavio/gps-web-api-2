@@ -5,6 +5,8 @@ import com.api.dao.AreaDAOImpl;
 import com.api.dao.PositionDAO;
 import com.api.dao.PositionDAOImpl;
 import com.api.model.Area;
+import com.api.model.Calculator;
+import com.api.model.CalculatorImpl;
 import com.api.model.Position;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,11 +24,13 @@ public class GPSController {
     private final static org.slf4j.Logger logger = LoggerFactory.getLogger(GPSController.class);
     private PositionDAO positionDAO;
     private AreaDAO areaDAO;
+    private Calculator calculator;
 
     GPSController() {
         logger.info("M=GPSController, Iniciando");
         positionDAO = new PositionDAOImpl();
         areaDAO = new AreaDAOImpl();
+        calculator = new CalculatorImpl();
     }
 
     /**
@@ -48,8 +52,9 @@ public class GPSController {
      * !! Para teste, enquanto nao fica pronto o HTTP POST no Shield
      */
     @RequestMapping(value = "/position/save/{gpsId}/{latitude}/{longitude}", method = RequestMethod.GET)
-    public @ResponseBody Integer savePositionWithGet( //
-                                                      @PathVariable String gpsId, @PathVariable String latitude, @PathVariable String longitude) {
+    public @ResponseBody Integer savePositionWithGet(@PathVariable String gpsId,
+                                                     @PathVariable String latitude,
+                                                     @PathVariable String longitude) {
 
         logger.info("M=savePositionWithGet, gpsId=" + gpsId + ", latitude=" + latitude + ", longitude=" + longitude);
 
@@ -63,6 +68,8 @@ public class GPSController {
         position.setLongitude(Double.parseDouble(longitude));
 
         positionDAO.insert(position);
+        logAreaInfo(position);
+
         return position.getId();
     }
 
@@ -95,5 +102,16 @@ public class GPSController {
         }
 
         return false;
+    }
+
+    // Informa no log se a Position esta dentro da Area atual
+    private void logAreaInfo(final Position position) {
+
+        Area area = areaDAO.getActiveArea(); // Nao faz cache
+        boolean insideArea = calculator.isInsideArea(position, area);
+
+        logger.info("M=logAreaInfo, areaId=" + area.getId()
+                + ", position=" + position
+                + ", insideArea=" + insideArea);
     }
 }

@@ -1,10 +1,9 @@
 var map;
-// [TODO] - Estas variaveis tem de estar na View
-var gpsId = 1010;
+
 var latitude = -23.519697;
 var longitude = -46.835308;
 var markers = [];
-var url = "/api/position/" + gpsId;
+
 
 var whenDblClick;
 var usePositionListener;

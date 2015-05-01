@@ -11,9 +11,9 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA23uWRpiaM0b4tS1BLI3YXVHWrE9Q9_xQ&sensor=false"></script>
 	<script type="text/javascript" src="js/common.js"></script>
 	<script type="text/javascript">
-		// TODO fixme - alterar para nao necessitar do primeiro parametro
-		initMap('', true);
+        var url = "/api/position/" + "${gpsId}";
 
+		initMap('', true);
     </script>
   </head>
   <body>
